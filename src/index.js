@@ -7,6 +7,7 @@ const ul = document.querySelector("ul");
 const ADD_TODO = "ADD_TODO";
 const DELETE_TODO = "DELETE_TODO";
 
+// ! action creator addToDo, it only returns object
 const addToDo = (text) => {
   return {
     type: ADD_TODO,
@@ -14,6 +15,7 @@ const addToDo = (text) => {
   };
 };
 
+// ! action creator deleteToDo, it only returns object
 const deleteToDo = (id) => {
   return {
     type: DELETE_TODO,
@@ -33,27 +35,33 @@ const reducer = (state = [], action) => {
   }
 };
 
-const store = createStore(reducer);
+const store = createStore(reducer); // ! 상태를 저장하는 store 개설, 하지만 reducer 가 필요하지
 
 store.subscribe(() => console.log(store.getState()));
 
+// submit button 을 누르면 실행되는 dispatchAddTodo
 const dispatchAddTodo = (text) => {
-  store.dispatch(addToDo(text));
+  store.dispatch(addToDo(text)); // reducer 에 action 을 전달!
 };
 
+// Del 버튼을 누르면 실행되는 dispatchDeleteToDo
 const dispatchDeleteToDo = (e) => {
-  const id = parseInt(e.target.parentNode.id); // ! html 에서의 id 는 문자열 타입이기에 정수로 변환
+  // ! html 에서의 id 는 문자열 타입이기에 정수로 변환
+  const id = parseInt(e.target.parentNode.id);
   store.dispatch(deleteToDo(id));
 };
 
 const paintToDos = () => {
   const toDos = store.getState();
-  ul.innerHTML = ""; // ! paintToDos 를 호출 할 때마다 ul 이 싹 지워졌다가 아래를 실행하게 한다.
+  // ! paintToDos 를 호출 할 때마다 ul 이 싹 지워졌다가 아래를 실행하게 한다.
+  ul.innerHTML = "";
   toDos.forEach((toDo) => {
     const li = document.createElement("li");
     const btn = document.createElement("button");
     btn.innerText = "DEL";
-    btn.addEventListener("click", dispatchDeleteToDo);
+
+    btn.addEventListener("click", dispatchDeleteToDo); // ! 여기 주목
+
     li.id = toDo.id;
     li.innerText = toDo.text;
     li.appendChild(btn);
@@ -61,6 +69,7 @@ const paintToDos = () => {
   });
 };
 
+// ! 구독, 스토어의 상태가 바뀔 때마다 알려주는 (실제 화면에 반영되게 하는) 역할을 한다.
 store.subscribe(paintToDos);
 
 const onSubmit = (e) => {
