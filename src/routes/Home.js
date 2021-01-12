@@ -4,7 +4,6 @@ import { connect } from "react-redux"; // ! connect 를 불러옴.
 
 const Home = (props) => {
   console.log(props); // ! 여기서 props 로 받아왔다. App.js 의 react-router 로부터!
-
   const [text, setText] = useState("");
 
   const handleChange = (event) => {
