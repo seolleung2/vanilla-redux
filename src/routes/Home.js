@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 
 import { actionCreators } from "../store"; // ! 얘도 임포트 해와야 한다.
 
+import ToDo from "../components/ToDo";
+
 // dispatch 를 home component 에서 사용하지 않는다. 함수를 만들어서 props 로 전달하게 한다.
 const Home = (props) => {
   console.log(props);
@@ -38,7 +40,11 @@ const Home = (props) => {
         <input type="text" value={text} onChange={handleChange} />
         <button>Add</button>
       </form>
-      <ul>{JSON.stringify(props.toDos)}</ul>
+      <ul>
+        {props.toDos.map((toDo) => (
+          <ToDo {...toDo} key={toDo.id} /> // {text: "asd", id: 1610861319410}
+        ))}
+      </ul>
     </>
   );
 };
