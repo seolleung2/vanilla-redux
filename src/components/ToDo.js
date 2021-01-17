@@ -3,11 +3,15 @@ import React from "react";
 import { connect } from "react-redux"; // ! import
 import { actionCreators } from "../store"; // ! import
 
+import { Link } from "react-router-dom";
+
 const ToDo = (props) => {
   console.log(props); // ? {text: "hi", id: 1610862445794, onBtnClick: ƒ}
   return (
     <li>
-      {props.text} <button onClick={props.onBtnClick}>DEL</button>
+      <Link to={`/${props.id}`}>
+        {props.text} <button onClick={props.onBtnClick}>DEL</button>
+      </Link>
     </li>
   );
 };
